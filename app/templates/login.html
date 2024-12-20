@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Войти через Telegram</title>
+</head>
+<body>
+    <h1>Войти через Telegram</h1>
+    <p><a href="{{ telegram_link }}" target="_blank">Войти через Telegram</a></p>
+    <p>Пожалуйста, откройте бота и нажмите "Start". После этого вернитесь на сайт, авторизация произойдет автоматически.</p>
+
+    <script>
+        const token = "{{ token }}";
+        // Каждые 3 секунды проверяем статус
+        setInterval(function(){
+            fetch("/check_status/?token=" + token)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'completed') {
+                    // Перезагрузим страницу, чтобы показалась профильная страница
+                    window.location.reload();
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>
